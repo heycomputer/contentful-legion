@@ -1,6 +1,7 @@
 import { Command, Options } from "@effect/cli";
 import { Config, ConfigProvider, Console, Effect, Layer, Option } from "effect";
 import { NodeContext, NodeRuntime } from "@effect/platform-node";
+import { archive } from "./command/archive";
 
 const spaceId = Options.text("space-id").pipe(
   Options.withAlias("s"),
@@ -31,7 +32,7 @@ const legion = Command.make(
     )
 );
 
-const command = legion;
+const command = legion.pipe(Command.withSubcommands([archive]));
 
 const cli = Command.run(command, {
   name: "legion",
