@@ -34,7 +34,7 @@ const legion = Command.make(
 const command = legion;
 
 const cli = Command.run(command, {
-  name: "Legion Contentful CLI",
+  name: "legion",
   version: "v0.0.1",
 });
 
