@@ -1,0 +1,17 @@
+{
+  "name": "contentful-legion",
+  "description": "A CLI for bulk management of Contentful entities",
+  "scripts": {
+    "dev": "tsx --watch src/main.ts",
+    "legion": "tsx src/main.ts"
+  },
+  "devDependencies": {
+    "@effect/cli": "^0.33.12",
+    "@effect/platform-node": "^0.44.5",
+    "effect": "^2.3.7",
+    "@types/node": "^20.8.9",
+    "contentful-management": "^11.19.1",
+    "prettier": "^3.2.5",
+    "tsx": "^3.14.0"
+  }
+}
