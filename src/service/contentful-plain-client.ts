@@ -9,6 +9,7 @@ export class ContentfulPlainClient extends Context.Tag("ContentfulPlainClient")<
   ContentfulPlainClient,
   ContentfulPlainClientAPI
 >() {}
+
 export const ContentfulPlainClientLive = Layer.effect(
   ContentfulPlainClient,
   Effect.all([
