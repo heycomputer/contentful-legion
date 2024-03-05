@@ -16,7 +16,11 @@ const entity = Args.choice<Entity>(
   { name: "entity" }
 ).pipe(Args.withDescription("entity type"));
 
-const query = Args.text({ name: "query" });
+const query = Args.text({ name: "query" }).pipe(
+  Args.withDescription(
+    "query to find entities - see https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ for query syntax"
+  )
+);
 
 export const archive = Command.make(
   "archive",
