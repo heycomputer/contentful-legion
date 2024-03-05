@@ -64,4 +64,4 @@ const toEffectAPI = (client: PlainClientAPI) => ({
   },
 });
 
-type ContentfulPlainClientAPI = ReturnType<typeof toEffectAPI>;
+export type ContentfulPlainClientAPI = ReturnType<typeof toEffectAPI>;
