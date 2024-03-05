@@ -1,10 +1,11 @@
 import { Args, Command, Options } from "@effect/cli";
 import {
   EntryProps,
+  KeyValueMap,
   PlainClientAPI,
   QueryOptions,
 } from "contentful-management";
-import { Console } from "effect";
+import { Console, Effect } from "effect";
 import * as Data from "effect/Data";
 import { parse } from "qs";
 import { ContentfulPlainClientAPI } from "../service/contentful-plain-client";
@@ -40,27 +41,29 @@ export const archive = Command.make(
 ).pipe(Command.withDescription("archive entities that match a query"));
 
 const queryEntries =
-  (client: ContentfulPlainClientAPI) => async (queryOptions: QueryOptions) => {
-    let morePages = true;
-    let skip = 0;
-    const limit = 1000;
-    let entries: EntryProps[] = [];
-    while (morePages) {
-      const collection = await client.entry.getMany({
-        query: {
-          skip,
-          limit,
-          ...queryOptions,
-        },
-      });
-      entries = [...entries, ...collection.items];
-      morePages = hasMorePages<EntryProps>(collection);
-      skip = collection.skip + collection.items.length;
-    }
-    return {
-      entries,
-      queryOptions,
-    };
-
-    return client.entry.getMany({ query });
-  };
+  (client: ContentfulPlainClientAPI) =>
+  <T extends KeyValueMap>(queryOptions: QueryOptions) =>
+    Effect.gen(function* (_) {
+      let morePages = true;
+      let skip = 0;
+      const limit = 1000;
+      let entries: EntryProps<T>[] = [];
+      while (morePages) {
+        const collection = yield* _(
+          client.entry.getMany<T>({
+            query: {
+              skip,
+              limit,
+              ...queryOptions,
+            },
+          })
+        );
+        entries = [...entries, ...collection.items];
+        morePages = hasMorePages<EntryProps>(collection);
+        skip = collection.skip + collection.items.length;
+      }
+      return {
+        entries,
+        queryOptions,
+      };
+    });
