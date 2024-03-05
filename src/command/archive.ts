@@ -14,7 +14,7 @@ const entity = Args.choice<Entity>(
     ["entry", entry],
   ],
   { name: "entity" }
-);
+).pipe(Args.withDescription("entity type"));
 
 const query = Args.text({ name: "query" });
 
