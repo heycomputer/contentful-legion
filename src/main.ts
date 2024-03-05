@@ -18,7 +18,7 @@ const accessToken = Options.secret("access-token").pipe(
   Options.withFallbackConfig(Config.secret("ACCESS_TOKEN"))
 );
 
-// legion [--version] [-h | --help] [-c SPACE_ID] [-e ENVIRONMENT_ID] [-t ACCESS_TOKEN]
+// legion [--version] [-h | --help] [-s SPACE_ID] [-e ENVIRONMENT_ID] [-t ACCESS_TOKEN]
 const legion = Command.make(
   "legion",
   { spaceId, environmentId, accessToken },
