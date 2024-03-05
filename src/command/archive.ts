@@ -8,6 +8,7 @@ import { Console } from "effect";
 import * as Data from "effect/Data";
 import { parse } from "qs";
 import { ContentfulPlainClientAPI } from "../service/contentful-plain-client";
+import { hasMorePages } from "../util/contentful";
 
 type Entity = Entry | Asset;
 class Entry extends Data.TaggedClass("Entry")<{}> {}
