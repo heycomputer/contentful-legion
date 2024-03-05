@@ -1,5 +1,5 @@
 import { Args, Command } from "@effect/cli";
-import { Console } from "effect";
+import { Console, Effect } from "effect";
 import * as Data from "effect/Data";
 import { parse } from "qs";
 
@@ -26,8 +26,20 @@ const query = Args.text({ name: "query" }).pipe(
 export const archive = Command.make(
   "archive",
   { entity, query },
-  ({ entity, query }) => {
-    const qs = parse(query);
-    return Console.log(`Running 'legion archive ${entity} ${query}'`);
-  }
+  ({ entity, query }) =>
+    Effect.try({
+      try: () => parse(query),
+      catch: (unknown) =>
+        new Error(
+          [
+            "unable to parse query,",
+            "see https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ for query syntax",
+            unknown?.toString(),
+          ].join("\n")
+        ),
+    }).pipe(
+      Effect.map((query) => {
+        Console.log(`Running 'legion archive ${entity} ${query}'`);
+      })
+    )
 ).pipe(Command.withDescription("archive entities that match a query"));
