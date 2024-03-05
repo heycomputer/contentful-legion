@@ -32,7 +32,12 @@ const legion = Command.make(
     )
 );
 
-const command = legion.pipe(Command.withSubcommands([archive]));
+const command = legion.pipe(
+  Command.withDescription(
+    "CLI to perform Contentful entity operations en-masse via the Contentful Management API."
+  ),
+  Command.withSubcommands([archive])
+);
 
 const cli = Command.run(command, {
   name: "legion",
