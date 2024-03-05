@@ -1,15 +1,7 @@
-import { Args, Command, Options } from "@effect/cli";
-import {
-  EntryProps,
-  KeyValueMap,
-  PlainClientAPI,
-  QueryOptions,
-} from "contentful-management";
-import { Console, Effect } from "effect";
+import { Args, Command } from "@effect/cli";
+import { Console } from "effect";
 import * as Data from "effect/Data";
 import { parse } from "qs";
-import { ContentfulPlainClientAPI } from "../service/contentful-plain-client";
-import { hasMorePages } from "../util/contentful";
 
 type Entity = Entry | Asset;
 class Entry extends Data.TaggedClass("Entry")<{}> {}
@@ -39,31 +31,3 @@ export const archive = Command.make(
     return Console.log(`Running 'legion archive ${entity} ${query}'`);
   }
 ).pipe(Command.withDescription("archive entities that match a query"));
-
-const queryEntries =
-  (client: ContentfulPlainClientAPI) =>
-  <T extends KeyValueMap>(queryOptions: QueryOptions) =>
-    Effect.gen(function* (_) {
-      let morePages = true;
-      let skip = 0;
-      const limit = 1000;
-      let entries: EntryProps<T>[] = [];
-      while (morePages) {
-        const collection = yield* _(
-          client.entry.getMany<T>({
-            query: {
-              skip,
-              limit,
-              ...queryOptions,
-            },
-          })
-        );
-        entries = [...entries, ...collection.items];
-        morePages = hasMorePages<EntryProps>(collection);
-        skip = collection.skip + collection.items.length;
-      }
-      return {
-        entries,
-        queryOptions,
-      };
-    });
