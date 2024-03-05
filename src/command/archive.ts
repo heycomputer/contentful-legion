@@ -3,6 +3,9 @@ import { Console, Effect } from "effect";
 import * as Data from "effect/Data";
 import { parse } from "qs";
 
+const QUERY_SYNTAX_DOC_URL =
+  "https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/";
+
 type Entity = Entry | Asset;
 class Entry extends Data.TaggedClass("Entry")<{}> {}
 class Asset extends Data.TaggedClass("Asset")<{}> {}
@@ -19,7 +22,7 @@ const entity = Args.choice<Entity>(
 
 const query = Args.text({ name: "query" }).pipe(
   Args.withDescription(
-    "query to find entities - see https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ for query syntax"
+    `query to find entities - see ${QUERY_SYNTAX_DOC_URL} for query syntax`
   )
 );
 
@@ -33,7 +36,7 @@ export const archive = Command.make(
         new Error(
           [
             "unable to parse query,",
-            "see https://www.contentful.com/developers/docs/references/content-delivery-api/#/reference/search-parameters/ for query syntax",
+            `see ${QUERY_SYNTAX_DOC_URL} for query syntax`,
             unknown?.toString(),
           ].join("\n")
         ),
