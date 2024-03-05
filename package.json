@@ -8,10 +8,10 @@
   "devDependencies": {
     "@effect/cli": "^0.33.14",
     "@effect/platform-node": "^0.44.5",
-    "effect": "^2.3.7",
     "@effect/schema": "^0.62.9",
     "@types/node": "^20.11.19",
     "contentful-management": "^11.19.1",
+    "effect": "^2.4.1",
     "prettier": "^3.2.5",
     "tsx": "^3.14.0"
   }
