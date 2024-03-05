@@ -17,6 +17,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.11.19
     version: 20.11.19
+  '@types/qs':
+    specifier: ^6.9.12
+    version: 6.9.12
   contentful-management:
     specifier: ^11.19.1
     version: 11.19.1
@@ -340,6 +343,10 @@ packages:
     resolution: {integrity: sha512-7xMnVEcZFu0DikYjWOlRq7NTPETrm7teqUT2WkQjrTIkEgUyyGdWsj/Zg8bEJt5TNklzbPD1X3fqfsHw3SpapQ==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
+
+  /@types/qs@6.9.12:
+    resolution: {integrity: sha512-bZcOkJ6uWrL0Qb2NAWKa7TBU+mJHPzhx9jjLL1KHF+XpzEcR7EXHvjbHlGtR/IsP1vyPrehuS6XqkmaePy//mg==}
     dev: true
 
   /asynckit@0.4.0:
