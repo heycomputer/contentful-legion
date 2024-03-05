@@ -6,7 +6,7 @@
     "legion": "tsx src/main.ts"
   },
   "devDependencies": {
-    "@effect/cli": "^0.33.12",
+    "@effect/cli": "^0.33.14",
     "@effect/platform-node": "^0.44.5",
     "effect": "^2.3.7",
     "@effect/schema": "^0.62.9",
