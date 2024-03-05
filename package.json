@@ -13,6 +13,7 @@
     "contentful-management": "^11.19.1",
     "effect": "^2.4.1",
     "prettier": "^3.2.5",
+    "qs": "^6.11.2",
     "tsx": "^3.14.0"
   }
 }
