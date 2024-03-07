@@ -2,6 +2,10 @@ import { Command, Options } from "@effect/cli";
 import { Config, ConfigProvider, Console, Effect, Layer, Option } from "effect";
 import { NodeContext, NodeRuntime } from "@effect/platform-node";
 import { archive } from "./command/archive";
+import {
+  ContentfulPlainClient,
+  ContentfulPlainClientLive,
+} from "./service/contentful-plain-client";
 
 const spaceId = Options.text("space-id").pipe(
   Options.withAlias("s"),
@@ -30,7 +34,7 @@ const legion = Command.make(
         `environment-id: ${environmentId}`,
       ].join("\n")
     )
-);
+).pipe(Command.provide(ContentfulPlainClientLive));
 
 const command = legion.pipe(
   Command.withDescription(
