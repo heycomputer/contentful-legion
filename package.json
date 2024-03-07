@@ -6,9 +6,9 @@
     "legion": "tsx src/main.ts"
   },
   "devDependencies": {
-    "@effect/cli": "^0.33.14",
-    "@effect/platform-node": "^0.44.5",
-    "@effect/schema": "^0.62.9",
+    "@effect/cli": "^0.34.3",
+    "@effect/platform-node": "^0.44.11",
+    "@effect/schema": "^0.63.2",
     "@types/node": "^20.11.19",
     "@types/qs": "^6.9.12",
     "contentful-management": "^11.19.1",
