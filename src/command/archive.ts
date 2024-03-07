@@ -1,5 +1,5 @@
 import { Args, Command } from "@effect/cli";
-import { Console, Effect } from "effect";
+import { Console, Effect, Match } from "effect";
 import * as Data from "effect/Data";
 import { parse } from "qs";
 
@@ -29,20 +29,32 @@ const query = Args.text({ name: "query" }).pipe(
 export const archive = Command.make(
   "archive",
   { entity, query },
-  ({ entity, query }) =>
-    Effect.try({
-      try: () => parse(query),
-      catch: (unknown) =>
-        new Error(
-          [
-            "unable to parse query,",
-            `see ${QUERY_SYNTAX_DOC_URL} for query syntax`,
-            unknown?.toString(),
-          ].join("\n")
-        ),
-    }).pipe(
-      Effect.map((query) => {
-        Console.log(`Running 'legion archive ${entity} ${query}'`);
-      })
-    )
+  ({ entity, query }) => {
+    switch (entity._tag) {
+      case "Entry":
+        return Effect.gen(function* (_) {
+          yield* _(Console.log(`Running 'legion archive entry ${query}'`));
+          const parsedQuery = yield* _(parseQuery(query));
+        });
+
+      case "Asset":
+        return Effect.gen(function* (_) {
+          yield* _(Console.log(`Running 'legion archive asset ${query}'`));
+          const parsedQuery = yield* _(parseQuery(query));
+        });
+    }
+  }
 ).pipe(Command.withDescription("archive entities that match a query"));
+
+const parseQuery = (query: string) =>
+  Effect.try({
+    try: () => parse(query),
+    catch: (unknown) =>
+      new Error(
+        [
+          "unable to parse query,",
+          `see ${QUERY_SYNTAX_DOC_URL} for query syntax`,
+          unknown?.toString(),
+        ].join("\n")
+      ),
+  });
